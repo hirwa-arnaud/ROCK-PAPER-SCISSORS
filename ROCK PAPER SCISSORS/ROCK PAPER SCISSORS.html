@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Rock Paper Scissors</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: #fff;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .game-container {
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 30px;
+      text-align: center;
+      width: 90%;
+      max-width: 400px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      font-size: 2rem;
+      color: #ffcc00;
+    }
+
+    .choices {
+      display: flex;
+      justify-content: space-around;
+      margin: 20px 0;
+    }
+
+    .choice {
+      background-color: rgba(255, 255, 255, 0.2);
+      border: 2px solid #fff;
+      border-radius: 10px;
+      padding: 20px;
+      cursor: pointer;
+      transition: 0.3s;
+      width: 80px;
+    }
+
+    .choice:hover {
+      background-color: #ffcc00;
+      color: #000;
+    }
+
+    .result {
+      margin-top: 20px;
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+
+    .score-board {
+      margin-top: 10px;
+    }
+
+    .score {
+      font-size: 1rem;
+      margin: 5px 0;
+    }
+
+    .highlight {
+      color: #00ff99;
+    }
+
+    @media (max-width: 500px) {
+      .choice {
+        padding: 15px;
+        width: 60px;
+      }
+
+      h1 {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="game-container">
+    <h1>Rock Paper Scissors</h1>
+
+    <div class="choices">
+      <div class="choice" onclick="play('rock')">✊</div>
+      <div class="choice" onclick="play('paper')">✋</div>
+      <div class="choice" onclick="play('scissors')">✌️</div>
+    </div>
+
+    <div class="result" id="result">Make your move!</div>
+
+    <div class="score-board">
+      <div class="score">Player: <span id="playerScore">0</span></div>
+      <div class="score">Computer: <span id="computerScore">0</span></div>
+    </div>
+  </div>
+
+  <script>
+    const result = document.getElementById("result");
+    const playerScoreEl = document.getElementById("playerScore");
+    const computerScoreEl = document.getElementById("computerScore");
+
+    const choices = ["rock", "paper", "scissors"];
+    let playerScore = 0;
+    let computerScore = 0;
+
+    function play(playerChoice) {
+      const computerChoice = choices[Math.floor(Math.random() * 3)];
+      const winner = getWinner(playerChoice, computerChoice);
+
+      if (winner === "player") {
+        playerScore++;
+        result.innerHTML = `You chose <strong>${playerChoice}</strong>, computer chose <strong>${computerChoice}</strong>. <span class="highlight">You win!</span>`;
+      } else if (winner === "computer") {
+        computerScore++;
+        result.innerHTML = `You chose <strong>${playerChoice}</strong>, computer chose <strong>${computerChoice}</strong>. <span class="highlight">Computer wins!</span>`;
+      } else {
+        result.innerHTML = `You both chose <strong>${playerChoice}</strong>. <span class="highlight">It's a tie!</span>`;
+      }
+
+      playerScoreEl.textContent = playerScore;
+      computerScoreEl.textContent = computerScore;
+    }
+
+    function getWinner(player, computer) {
+      if (player === computer) return "tie";
+      if (
+        (player === "rock" && computer === "scissors") ||
+        (player === "paper" && computer === "rock") ||
+        (player === "scissors" && computer === "paper")
+      ) {
+        return "player";
+      }
+      return "computer";
+    }
+  </script>
+</body>
+</html>
